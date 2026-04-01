@@ -1,0 +1,5 @@
+{
+  "name": "TradeVision AI",
+  "description": "AI-powered stock chart analysis tool. Upload your chart to get instant technical analysis, pattern recognition, and trading setups.",
+  "requestFramePermissions": []
+}
