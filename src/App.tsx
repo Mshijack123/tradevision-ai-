@@ -27,9 +27,14 @@ export default function App() {
     try {
       const analysis = await analyzeChart(base64, type);
       setResult(analysis);
-    } catch (err) {
-      console.error(err);
-      setError('Analysis failed due to a temporary server error. Please try again.');
+    } catch (err: any) {
+      console.error("Analysis Error:", err);
+      const errorMessage = err?.message || String(err);
+      if (errorMessage.includes('500') || errorMessage.includes('Rpc failed')) {
+        setError('The AI server is currently overloaded. Please use the "Retry" button below.');
+      } else {
+        setError('Analysis failed due to a temporary server error. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -72,7 +77,7 @@ export default function App() {
         <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-500 uppercase tracking-tighter">
           <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> Live Market Data</span>
           <span className="hidden sm:inline">|</span>
-          <span className="hidden sm:inline">Engine: Gemini 3 Flash (High Speed)</span>
+          <span className="hidden sm:inline">Engine: Gemini 3.1 Pro / Flash (Adaptive)</span>
         </div>
       </header>
 
